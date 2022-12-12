@@ -23,26 +23,44 @@ namespace Dátum
 
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string kivFile = openFileDialog1.FileName;
+                string szovegg = File.ReadAllText(kivFile);
+                string[] adat = szovegg.Split(';');
+                textBox1.Text = adat[0];
+                richTextBox1.Text = adat[1];
+                dateTimePicker1.Text= adat[2];
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-           
+
             if (string.IsNullOrEmpty(textBox1.Text))
             {
-                MessageBox.Show("Nem adott meg nevet!");
+                MessageBox.Show("Nem adtál meg nevet!");
                 return;
             }
             if (string.IsNullOrEmpty(richTextBox1.Text))
             {
-                MessageBox.Show("Nem adott meg szöveget!");
+                MessageBox.Show("Nem adtál meg szöveget!");
                 return;
             }
             saveFileDialog1.Filter = "Szöveg fájl|*.txt| Vesszővel tagolt szövegfájl (*.csv) |*.csv|minden fájl|*.*";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                string szoveg = string.Join(";", textBox1.Text, richTextBox1.Text,dateTimePicker1.Value);
-                string kivFile = saveFileDialog1.FileName;
-                File.WriteAllText(kivFile, szoveg);
-                MessageBox.Show("A kiválasztott fájl:" + kivFile);
+                string szoveg = string.Join(";", textBox1.Text, richTextBox1.Text, dateTimePicker1.Value);
+                string kFile = saveFileDialog1.FileName;
+                File.WriteAllText(kFile, szoveg);
+                MessageBox.Show("A kiválasztott fájl:" + kFile);
                 textBox1.Text = "";
                 richTextBox1.Text = "";
 
@@ -53,17 +71,9 @@ namespace Dátum
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                string kivFile = openFileDialog1.FileName;
-                string beolvasottSzoveg = File.ReadAllText(kivFile);
-                string[] adatok = beolvasottSzoveg.Split(';');
-                textBox1.Text = adatok[0];
-                richTextBox1.Text = adatok[1];
-                dateTimePicker1.Text= adatok[2];
-            }
+
         }
     }
 }
